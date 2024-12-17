@@ -5,14 +5,19 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -23,9 +28,14 @@ import com.example.myapplication.models.BottomNavigationItem
 import com.example.myapplication.pages.bottomNavViews.Home
 import com.example.myapplication.pages.bottomNavViews.Profile
 import com.example.myapplication.pages.bottomNavViews.SearchView
+import com.example.myapplication.viewmodels.LogoutState
+import com.example.myapplication.viewmodels.LogoutViewModel
+import kotlinx.coroutines.launch
 
 @Composable
-fun LandingPage(navController: NavController) {
+fun LandingPage(
+    parentNavController: NavHostController
+) {
     var navigationSelectedItem by remember {
         mutableIntStateOf(0)
     }
@@ -78,7 +88,7 @@ fun LandingPage(navController: NavController) {
                 SearchView()
             }
             composable("Profile") {
-                Profile(navController)
+                Profile(parentNavController)
             }
         }
     }

@@ -10,7 +10,6 @@ import com.example.myapplication.models.LoginStatus
 import com.example.myapplication.utility.RetrofitInstance
 import kotlinx.coroutines.launch
 
-import androidx.compose.ui.platform.LocalContext
 
 
 class LoginViewModel : ViewModel() {

@@ -27,6 +27,9 @@ interface ApiService{
 
     @GET("api/account-details/")
     suspend fun getProfile():LoginResponse
+
+    @GET("api/v2/logout/")
+    suspend fun logout():Any
 }
 
 
