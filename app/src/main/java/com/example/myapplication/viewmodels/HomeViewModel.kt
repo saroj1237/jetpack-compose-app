@@ -45,4 +45,23 @@ class HomeViewModel : ViewModel() {
             }
         }
     }
+
+    fun chooseOption(questionId: Int, optionId: Int) {
+        println("questionId:$questionId optionId:$optionId")
+        val currentHomeContent = _homeContent.value ?: return
+        val updatedQuestions = currentHomeContent.suggested_questions.map { question ->
+            if (question.id == questionId) {
+                question.copy(
+                    is_attempted = true,
+                    options = question.options.map { option ->
+                        option.copy(selected = option.id == optionId)
+                    }
+                )
+            } else {
+                question
+            }
+
+        }
+        _homeContent.value = currentHomeContent.copy(suggested_questions = updatedQuestions)
+    }
 }

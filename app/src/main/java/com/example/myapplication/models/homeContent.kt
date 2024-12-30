@@ -1,20 +1,23 @@
 data class HomeContent(
     val suggested_questions: List<SuggestedQuestion>,
-    val suggested_video:List<SuggestedVideo>
+    val suggested_video: List<SuggestedVideo>,
+    val suggested_note: List<SuggestedNote>,
+    val suggested_test: List<SuggestedTest>
 )
 
-data class  SuggestedQuestion(
-    val id: String,
+data class SuggestedQuestion(
+    val id: Int,
     val hint_and_solution: String?,
     val is_attempted: Boolean,
-    val should_load_with_html:Boolean,
+    val should_load_with_html: Boolean,
     val is_bookmarked: Boolean,
     val question: String,
     val unique_question_id: String,
     val options: List<Option>
 )
+
 data class Option(
-    val id: String,
+    val id: Int,
     val is_correct_answer: Boolean,
     val selected: Boolean,
     val option: String,
@@ -38,3 +41,23 @@ data class SuggestedVideo(
     val is_free: Boolean,
 )
 
+data class SuggestedNote(
+    val id: Int,
+    val description: String,
+    val file: String,
+    val question_count: Int,
+    val is_accessible: Boolean,
+    val image: String?,
+
+    )
+
+data class SuggestedTest(
+    val id: Int,
+    val title: String,
+    val nested_title: String,
+    val file: String,
+    val total_question_count: Int,
+    val is_accessible: Boolean,
+    val image: String?,
+
+    )

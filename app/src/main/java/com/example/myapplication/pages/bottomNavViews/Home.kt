@@ -1,9 +1,11 @@
 package com.example.myapplication.pages.bottomNavViews
 
+import SuggestedNote
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,15 +21,22 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -41,6 +50,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.example.myapplication.R
 import com.example.myapplication.components.RecommendedVideosSlider
+import com.example.myapplication.components.SuggestedNoteSlider
+import com.example.myapplication.components.SuggestedTestSlider
 import com.example.myapplication.viewmodels.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,6 +64,7 @@ fun Home(viewModel: HomeViewModel = viewModel()) {
     val state = rememberPagerState(pageCount = { viewModel.topBanners.value.size })
     val homeContent = remember { viewModel.homeContent }
     val topBanners = remember { viewModel.topBanners }
+
 
     Scaffold(
         topBar = {
@@ -77,6 +89,7 @@ fun Home(viewModel: HomeViewModel = viewModel()) {
                 })
         },
     ) { pa ->
+
         LazyColumn(
             modifier = Modifier.padding(pa)
 
@@ -128,9 +141,25 @@ fun Home(viewModel: HomeViewModel = viewModel()) {
                             homeContent.value?.suggested_questions?.first()?.options?.map { i ->
                                 Column {
                                     Card(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        border = BorderStroke(1.dp, Color.Black),
-                                        //                            colors = CardDefaults.cardColors(containerColor = White)
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                if (!it.is_attempted)
+                                                    viewModel.chooseOption(
+                                                        optionId = i.id,
+                                                        questionId = it.id
+                                                    )
+                                            },
+                                        border = BorderStroke(
+                                            1.dp,
+                                            when {
+                                                it.is_attempted && i.selected && i.is_correct_answer -> Color.Green
+                                                it.is_attempted && i.selected && !i.is_correct_answer -> Color.Red
+                                                it.is_attempted && !i.selected && i.is_correct_answer -> Color.Green
+                                                else -> Color.Black
+                                            }
+
+                                        ),
                                     ) {
                                         Text(
                                             modifier = Modifier.padding(12.dp),
@@ -150,6 +179,15 @@ fun Home(viewModel: HomeViewModel = viewModel()) {
 
             item {
                 homeContent.value?.let { RecommendedVideosSlider(it.suggested_video) }
+            }
+
+            item {
+                homeContent.value?.let { SuggestedTestSlider(it.suggested_test) }
+            }
+            item {
+                homeContent.value?.let {
+                    SuggestedNoteSlider(it.suggested_note)
+                }
             }
         }
     }

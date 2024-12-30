@@ -97,13 +97,13 @@ fun LoginPage(navController: NavController, loginViewModel: LoginViewModel = vie
             TextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Label") }
+                label = { Text("Username") }
             )
             Box(modifier = Modifier.height(16.dp))
             TextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Label") }
+                label = { Text("Password") }
             )
             Box(modifier = Modifier.height(16.dp))
             if (loginState.status == LoginStatus.Loading) {

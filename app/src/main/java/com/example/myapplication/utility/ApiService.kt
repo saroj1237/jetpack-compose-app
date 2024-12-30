@@ -49,6 +49,21 @@ class AuthInterceptor(private val context: Context) : Interceptor {
 
 }
 
+class SessionInterceptor(private val context: Context) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val response = chain.proceed(chain.request())
+
+        if (response.code == 401) {
+            val localStorage = LocalStorage(context)
+            localStorage.deleteToken()
+            // Navigate to Login Page.
+
+        }
+
+        return response
+    }
+}
+
 object RetrofitInstance{
 private const val BASE_URL = "https://liveguru.net/"
     private var apiService: ApiService? = null

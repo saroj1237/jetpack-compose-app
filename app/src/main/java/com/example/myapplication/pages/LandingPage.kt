@@ -28,6 +28,7 @@ import com.example.myapplication.models.BottomNavigationItem
 import com.example.myapplication.pages.bottomNavViews.Home
 import com.example.myapplication.pages.bottomNavViews.Profile
 import com.example.myapplication.pages.bottomNavViews.SearchView
+import com.example.myapplication.pages.bottomNavViews.Videos
 import com.example.myapplication.viewmodels.LogoutState
 import com.example.myapplication.viewmodels.LogoutViewModel
 import kotlinx.coroutines.launch
@@ -86,6 +87,9 @@ fun LandingPage(
             }
             composable("Search") {
                 SearchView()
+            }
+            composable("Videos") {
+                Videos()
             }
             composable("Profile") {
                 Profile(parentNavController)

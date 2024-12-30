@@ -1,45 +1,26 @@
 package com.example.myapplication.components
 
-import SuggestedVideo
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import SuggestedNote
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 
 @Composable
-fun RecommendedVideosSlider(suggestedVideo: List<SuggestedVideo>) {
-
-    val showBottomSheet = remember { mutableStateOf(false) }
-
-    SubscriptionBottomSheet(
-        openSheet = showBottomSheet
-    )
+fun SuggestedNoteSlider(suggestedNotes: List<SuggestedNote>) {
     Column {
         Text(
-            text = "Recommended Videos",
+            text = "Suggested Notes",
             modifier = Modifier.padding(horizontal = 12.dp)
         )
         LazyRow(
@@ -48,36 +29,32 @@ fun RecommendedVideosSlider(suggestedVideo: List<SuggestedVideo>) {
                 .height(200.dp),
             contentPadding = PaddingValues(end = 12.dp),
         ) {
-            items(suggestedVideo.size) { index ->
+            items(suggestedNotes.size) { index ->
                 Card(
                     modifier = Modifier
                         .width(212.dp)
                         .padding(end = 12.dp)
-                        .clickable {
-                            if (!suggestedVideo[index].is_free) showBottomSheet.value = true
-                        }
 
                 ) {
                     Column {
                         AsyncImage(
-                            model = suggestedVideo[index].thumbnail,
+                            model = suggestedNotes[index].image,
                             modifier = Modifier.weight(0.7f),
                             contentScale = ContentScale.FillBounds,
                             contentDescription = null,
                         )
                         Text(
-                            text = suggestedVideo[index].title,
+                            text = suggestedNotes[index].description,
                             modifier = Modifier
                                 .weight(0.3f)
-                                .padding(horizontal = 8.dp),
+                                .padding(8.dp),
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
             }
-            //        }
+
         }
     }
 }
-

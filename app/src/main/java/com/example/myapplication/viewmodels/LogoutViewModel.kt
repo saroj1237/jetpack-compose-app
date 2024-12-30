@@ -17,6 +17,7 @@ class LogoutViewModel : ViewModel() {
     fun logout() {
         viewModelScope.launch {
             try {
+                _logoutState.value = LogoutState.Loading
                 val response = RetrofitInstance.getApi().logout()
                 println("Logout response: $response")
                 if (response is Map<*, *>) {
