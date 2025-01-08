@@ -5,6 +5,12 @@ plugins {
 }
 
 android {
+    sourceSets {
+        getByName("main") {
+            jniLibs.srcDirs("libs")
+        }
+    }
+
     namespace = "com.example.myapplication"
     compileSdk = 35
 
@@ -65,4 +71,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation (files("libs/AliyunPlayer-6.12.0-full.aar"))
 }

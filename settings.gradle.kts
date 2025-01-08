@@ -16,8 +16,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://maven.aliyun.com/repository/releases") }
     }
 }
+
 
 rootProject.name = "My Application"
 include(":app")

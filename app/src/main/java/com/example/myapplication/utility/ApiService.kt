@@ -2,6 +2,7 @@ package com.example.myapplication.utility
 
 import HomeContent
 import android.content.Context
+import androidx.compose.ui.graphics.rememberGraphicsLayer
 import com.example.myapplication.models.BannerResponse
 import com.example.myapplication.models.LoginResponse
 import com.example.myapplication.models.PostModel
@@ -67,6 +68,7 @@ class SessionInterceptor(private val context: Context) : Interceptor {
 object RetrofitInstance{
 private const val BASE_URL = "https://liveguru.net/"
     private var apiService: ApiService? = null
+    private var videoApiService: VideoApiService? = null
 
     fun initialize(context: Context) {
         val client = OkHttpClient.Builder()
@@ -80,9 +82,13 @@ private const val BASE_URL = "https://liveguru.net/"
             .build()
 
         apiService = retrofit.create(ApiService::class.java)
+        videoApiService =retrofit.create(VideoApiService::class.java)
     }
 
     fun getApi(): ApiService {
         return apiService ?: throw IllegalStateException("RetrofitInstance is not initialized. Call initialize(context) first.")
+    }
+    fun getVideoApi():VideoApiService{
+        return videoApiService ?: throw IllegalStateException("RetrofitInstance is not initialized. Call initialize(context) first.")
     }
 }
