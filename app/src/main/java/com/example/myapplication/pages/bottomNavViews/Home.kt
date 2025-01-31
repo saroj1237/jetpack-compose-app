@@ -21,6 +21,7 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -37,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.example.myapplication.R
 import com.example.myapplication.widgets.RecommendedVideosSlider
@@ -46,7 +48,8 @@ import com.example.myapplication.viewmodels.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Home(viewModel: HomeViewModel = viewModel()) {
+fun Home(viewModel: HomeViewModel = viewModel(),
+         parentNavController: NavHostController) {
     LaunchedEffect(Unit) {
         viewModel.fetchBanners();
         viewModel.fetchHomeContent();
@@ -74,7 +77,12 @@ fun Home(viewModel: HomeViewModel = viewModel()) {
                 },
                 actions = {
                     Row {
-                        Icon(Icons.Outlined.Notifications, null)
+                        IconButton(onClick = {
+parentNavController.navigate("notification");
+                        },
+                            content = {Icon(Icons.Outlined.Notifications, null)
+                        },
+                            )
                     }
                 })
         },

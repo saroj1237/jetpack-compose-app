@@ -41,6 +41,7 @@ fun MainPage(navController: NavHostController) {
     NavHost(navController, startDestination = if (token == null) "Login" else "Landing") {
         composable("Login") { LoginPage(navController) }
         composable("Landing") { LandingPage(navController) }
+        composable("notification") { Text("Notification")  }
     }
 }
 

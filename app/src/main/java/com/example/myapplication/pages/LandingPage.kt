@@ -83,7 +83,7 @@ fun LandingPage(
             modifier = Modifier.padding(paddingValues = paddingValues)
         ) {
             composable("Dashboard") {
-                Home()
+                Home(parentNavController = parentNavController)
             }
             composable("Search") {
                 SearchView()

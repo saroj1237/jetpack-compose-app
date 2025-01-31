@@ -67,8 +67,11 @@ class SessionInterceptor(private val context: Context) : Interceptor {
 
 object RetrofitInstance{
 private const val BASE_URL = "https://liveguru.net/"
+//    private const val BASE_URL = "https://staging.liveguru.susankya.com.np/"
+
     private var apiService: ApiService? = null
     private var videoApiService: VideoApiService? = null
+    private var notificationApiService:NotificationApiService?=null
 
     fun initialize(context: Context) {
         val client = OkHttpClient.Builder()
@@ -83,6 +86,7 @@ private const val BASE_URL = "https://liveguru.net/"
 
         apiService = retrofit.create(ApiService::class.java)
         videoApiService =retrofit.create(VideoApiService::class.java)
+        notificationApiService = retrofit.create(NotificationApiService::class.java)
     }
 
     fun getApi(): ApiService {
@@ -90,5 +94,9 @@ private const val BASE_URL = "https://liveguru.net/"
     }
     fun getVideoApi():VideoApiService{
         return videoApiService ?: throw IllegalStateException("RetrofitInstance is not initialized. Call initialize(context) first.")
+    }
+
+    fun getNotificationApi():NotificationApiService{
+        return notificationApiService?:throw  IllegalStateException("RetrofitInstance is not initialized. Call initialize(context) first.")
     }
 }
